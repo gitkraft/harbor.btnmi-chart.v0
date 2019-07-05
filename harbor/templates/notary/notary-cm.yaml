@@ -1,8 +1,8 @@
-{{ if .Values.notary.enabled }}
+{{- if .Values.notary.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "harbor.notary-server" . }}
+  name: "{{ template "harbor.notary-server" . }}"
   labels: {{ include "harbor.labels" . | nindent 4 }}
     component: notary
 data:
@@ -70,4 +70,4 @@ data:
         "default_alias": "defaultalias"
       }
     }
-{{ end }}
+{{- end }}

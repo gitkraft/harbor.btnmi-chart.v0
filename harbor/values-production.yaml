@@ -231,6 +231,24 @@ nginxImage:
 ##
 # fullnameOverride:
 
+## Init containers parameters:
+## volumePermissions: Change the owner and group of the persistent volume mountpoint to runAsUser:fsGroup values from the securityContext section.
+##
+volumePermissions:
+  enabled: false
+  image:
+    registry: docker.io
+    repository: bitnami/minideb
+    tag: latest
+    pullPolicy: Always
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # pullSecrets:
+    #   - myRegistryKeySecretName
+  resources: {}
+
 service:
   # Set the way how to expose the service. Set the type as "Ingress",
   # "ClusterIP", "NodePort" or "LoadBalancer" and fill the information
@@ -281,8 +299,6 @@ service:
       # The service port Notary listens on. Only needed when notary.enabled
       # is set to true
       notaryPort: 4443
-    annotations: {}
-    sourceRanges: []
   nodePort:
     # The name of NodePort service
     name: harbor
@@ -314,6 +330,8 @@ service:
       # The service port Notary listens on. Only needed when notary.enabled
       # is set to true
       notaryPort: 4443
+    annotations: {}
+    sourceRanges: []
 
 # The external URL for Harbor core service. It is used to
 # 1) populate the docker/helm commands showed on portal
@@ -336,7 +354,6 @@ externalURL: https://core.harbor.domain
 # Set uaaSecretName below to provide a pre-created secret that
 # contains a base64 encoded CA Certificate named `ca.crt`.
 # uaaSecretName:
-
 
 ## Kubernetes Security Context
 ## https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
